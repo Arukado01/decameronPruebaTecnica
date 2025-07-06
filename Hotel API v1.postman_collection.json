@@ -1,10 +1,11 @@
 {
 	"info": {
-		"_postman_id": "a7e80383-aba5-4caf-9e85-c6b790145412",
-		"name": "Hotel API v1",
+		"_postman_id": "74995469-3566-474c-a4a0-5feafe6acf3d",
+		"name": "Decameron API",
+		"description": "Colección de los endpoints de tu SPA React + Laravel API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9578790",
-		"_collection_link": "https://lunar-station-657559.postman.co/workspace/urp~1db559ca-64be-428f-bd6e-5d8b8a08813d/collection/9578790-a7e80383-aba5-4caf-9e85-c6b790145412?action=share&source=collection_link&creator=9578790"
+		"_collection_link": "https://lunar-station-657559.postman.co/workspace/urp~1db559ca-64be-428f-bd6e-5d8b8a08813d/collection/9578790-74995469-3566-474c-a4a0-5feafe6acf3d?action=share&source=collection_link&creator=9578790"
 	},
 	"item": [
 		{
@@ -13,9 +14,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base}}/api/v1/hotels",
+					"raw": "http://3.139.21.107/api/v1/hotels",
+					"protocol": "http",
 					"host": [
-						"{{base}}"
+						"3",
+						"139",
+						"21",
+						"107"
 					],
 					"path": [
 						"api",
@@ -38,12 +43,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"name\":\"Hotel Caribe\",\"nit\":\"900123456-7\",\"address\":\"Calle 1 #2-3\",\"city\":\"Cartagena\",\"max_rooms\":50 }"
+					"raw": "{\n  \"name\": \"Hotel Decameron\",\n  \"city\": \"Cartagena\",\n  \"max_rooms\": 100\n}"
 				},
 				"url": {
-					"raw": "{{base}}/api/v1/hotels",
+					"raw": "http://3.139.21.107/api/v1/hotels",
+					"protocol": "http",
 					"host": [
-						"{{base}}"
+						"3",
+						"139",
+						"21",
+						"107"
 					],
 					"path": [
 						"api",
@@ -55,14 +64,99 @@
 			"response": []
 		},
 		{
+			"name": "Get Hotel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/hotels/1",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Hotel",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Hotel Decameron Playa\",\n  \"city\": \"Cartagena\",\n  \"max_rooms\": 120\n}"
+				},
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/hotels/1",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Hotel",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/hotels/1",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "List Inventories",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base}}/api/v1/hotels/1/inventories",
+					"raw": "http://3.139.21.107/api/v1/hotels/1/inventories",
+					"protocol": "http",
 					"host": [
-						"{{base}}"
+						"3",
+						"139",
+						"21",
+						"107"
 					],
 					"path": [
 						"api",
@@ -87,27 +181,160 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"hotel_id\":1,\"room_type_id\":2,\"accommodation_id\":3,\"quantity\":10 }"
+					"raw": "{\n  \"hotel_id\": 1,\n  \"room_type_id\": 2,\n  \"accommodation_id\": 3,\n  \"quantity\": 10\n}"
 				},
 				"url": {
-					"raw": "{{base}}/api/v1/inventories",
+					"raw": "http://3.139.21.107/api/v1/hotels/1/inventories",
+					"protocol": "http",
 					"host": [
-						"{{base}}"
+						"3",
+						"139",
+						"21",
+						"107"
 					],
 					"path": [
 						"api",
 						"v1",
+						"hotels",
+						"1",
 						"inventories"
 					]
 				}
 			},
 			"response": []
-		}
-	],
-	"variable": [
+		},
 		{
-			"key": "base",
-			"value": "http://localhost:8000"
+			"name": "Get Inventory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/hotels/1/inventories/5",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1",
+						"inventories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Inventory",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"hotel_id\": 1,\n  \"room_type_id\": 2,\n  \"accommodation_id\": 3,\n  \"quantity\": 15\n}"
+				},
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/hotels/1/inventories/5",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1",
+						"inventories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Inventory",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/hotels/1/inventories/5",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1",
+						"inventories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Room Types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/room-types",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"room-types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Accommodations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.139.21.107/api/v1/accommodations",
+					"protocol": "http",
+					"host": [
+						"3",
+						"139",
+						"21",
+						"107"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accommodations"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
