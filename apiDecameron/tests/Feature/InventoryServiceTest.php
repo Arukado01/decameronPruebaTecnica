@@ -5,7 +5,7 @@ use App\Services\InventoryService;
 use App\DTO\InventoryData;
 use App\Models\Hotel;
 
-it('rechaza crear inventario cuando supera el máximo', function () {
+it('rechaza crear habitación cuando supera el máximo', function () {
 
     $hotel = Hotel::factory(['max_rooms' => 5])->create();
     $svc   = app(InventoryService::class);

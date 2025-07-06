@@ -1,66 +1,95 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateHotel } from "./hotel.api";
-import type { HotelPayload } from "./hotel.types";
+import { useCreateHotel, useUpdateHotel } from "./hotel.api";
+import type { Hotel, HotelPayload } from "./hotel.types";
 import { z } from "zod";
 
 const schema = z.object({
-    name: z.string().min(3),
-    nit: z.string().min(5),
-    address: z.string().min(5),
-    city: z.string(),
-    max_rooms: z
-        .number({ invalid_type_error: "Debes ingresar un número" })
-        .min(1),
+  name: z.string().min(3, "Ingrese un nombre válido"),
+  nit: z.string().min(3),
+  address: z.string().min(3),
+  city: z.string().min(2),
+  max_rooms: z.number({ invalid_type_error: "Debe ser número" }).min(1),
 });
-
 type FormData = z.infer<typeof schema>;
 
-export default function HotelFormModal({ onClose }: { onClose: () => void }) {
-    const { register, handleSubmit, formState } = useForm<FormData>({
-        resolver: zodResolver(schema),
-    });
-    const mutation = useCreateHotel();
-    const { mutate } = mutation;
+interface Props {
+  onClose: () => void;
+  hotel?: Hotel;          // presente  ⇒  editar
+}
 
-    const submit = handleSubmit((data) => {
-        mutate(data as HotelPayload, { onSuccess: onClose });
-    });
+export default function HotelFormModal({ onClose, hotel }: Props) {
+  /* ───── react-hook-form ───── */
+  const {
+    register,
+    handleSubmit,
+    formState,
+    reset,
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: hotel
+      ? // edición
+        { ...hotel, max_rooms: hotel.max_rooms }
+      : // creación
+        { max_rooms: 1 } as Partial<FormData>,
+  });
 
-    return (
-        <div className="fixed inset-0 bg-black/40 grid place-items-center">
-            <form
-                onSubmit={submit}
-                className="bg-white p-6 rounded-lg shadow max-w-md w-full space-y-4"
-            >
-                <h2 className="text-xl font-semibold">Nuevo Hotel</h2>
+  /* Cuando la prop `hotel` cambie (abrir otro registro) → reset */
+  useEffect(() => {
+    if (hotel) {
+      reset({ ...hotel } as unknown as FormData);
+    } else {
+      reset({ max_rooms: 1 } as Partial<FormData>);
+    }
+  }, [hotel, reset]);
 
-                <input {...register("name")} placeholder="Nombre" className="input" />
-                <input {...register("nit")} placeholder="NIT" className="input" />
-                <input {...register("address")} placeholder="Dirección" className="input" />
-                <input {...register("city")} placeholder="Ciudad" className="input" />
-                <input
-                    type="number"
-                    {...register("max_rooms", { valueAsNumber: true })}
-                    placeholder="Habitaciones Máx."
-                    className="input"
-                />
+  /* ───── mutations ───── */
+  const create = useCreateHotel();
+  const update = useUpdateHotel();
 
-                {formState.errors && (
-                    <p className="text-red-600 text-sm">
-                        {Object.values(formState.errors)[0]?.message as string}
-                    </p>
-                )}
+  const submit = handleSubmit((d) => {
+    const payload = d as HotelPayload;
+    if (hotel) {
+      update.mutate({ id: hotel.id, ...payload }, { onSuccess: onClose });
+    } else {
+      create.mutate(payload, { onSuccess: onClose });
+    }
+  });
 
-                <div className="flex justify-end gap-2">
-                    <button type="button" className="btn" onClick={onClose}>
-                        Cancelar
-                    <button type="submit" className="btn btn-primary" disabled={mutation.status === "pending"}>
-                        {mutation.status === "pending" ? "Guardando…" : "Guardar"}
-                    </button>
-                    </button>
-                </div>
-            </form>
+  return (
+    <div className="fixed inset-0 grid place-items-center bg-black/40 z-50">
+      <form onSubmit={submit} className="card w-full max-w-lg space-y-4">
+        <h2 className="text-xl font-semibold">
+          {hotel ? "Editar hotel" : "Nuevo hotel"}
+        </h2>
+
+        <input {...register("name")} placeholder="Nombre" className="input" />
+        <input {...register("nit")} placeholder="NIT" className="input" />
+        <input {...register("address")} placeholder="Dirección" className="input" />
+        <input {...register("city")} placeholder="Ciudad" className="input" />
+        <input
+          type="number"
+          {...register("max_rooms", { valueAsNumber: true })}
+          placeholder="Habitaciones Máx."
+          className="input"
+        />
+
+        {formState.errors && (
+          <p className="text-red-600 text-sm">
+            {Object.values(formState.errors)[0]?.message as string}
+          </p>
+        )}
+
+        <div className="flex justify-end gap-2 pt-2">
+          <button type="button" className="btn-outline" onClick={onClose}>
+            Cancelar
+          </button>
+          <button type="submit" className="btn-primary">
+            {hotel ? "Actualizar" : "Guardar"}
+          </button>
         </div>
-    );
+      </form>
+    </div>
+  );
 }

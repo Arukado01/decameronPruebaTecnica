@@ -4,6 +4,11 @@ import path from "node:path";
 
 export default defineConfig({
   plugins: [react()],
+  css: {
+    modules: {
+      globalModulePaths: [/index\.css$/],
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

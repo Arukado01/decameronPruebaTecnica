@@ -7,6 +7,7 @@ use App\Http\Requests\StoreHotelRequest;
 use App\DTO\HotelData;
 use App\Services\HotelService;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\UpdateHotelRequest;
 
 class HotelController extends Controller
 {
@@ -41,7 +42,7 @@ class HotelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreHotelRequest $req, int $id)
+    public function update(UpdateHotelRequest $req, int $id)
     {
         return $this->svc->update($id, HotelData::fromArray($req->validated()));
     }

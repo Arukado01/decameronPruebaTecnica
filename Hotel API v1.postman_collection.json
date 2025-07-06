@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "a7e80383-aba5-4caf-9e85-c6b790145412",
+		"name": "Hotel API v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9578790",
+		"_collection_link": "https://lunar-station-657559.postman.co/workspace/urp~1db559ca-64be-428f-bd6e-5d8b8a08813d/collection/9578790-a7e80383-aba5-4caf-9e85-c6b790145412?action=share&source=collection_link&creator=9578790"
+	},
+	"item": [
+		{
+			"name": "List Hotels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/api/v1/hotels",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Hotel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\":\"Hotel Caribe\",\"nit\":\"900123456-7\",\"address\":\"Calle 1 #2-3\",\"city\":\"Cartagena\",\"max_rooms\":50 }"
+				},
+				"url": {
+					"raw": "{{base}}/api/v1/hotels",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Inventories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/api/v1/hotels/1/inventories",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"hotels",
+						"1",
+						"inventories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Inventory",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"hotel_id\":1,\"room_type_id\":2,\"accommodation_id\":3,\"quantity\":10 }"
+				},
+				"url": {
+					"raw": "{{base}}/api/v1/inventories",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"inventories"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base",
+			"value": "http://localhost:8000"
+		}
+	]
+}
